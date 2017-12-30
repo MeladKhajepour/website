@@ -212,14 +212,8 @@ h1 {
   padding-left: 48px;
 }
 
-#header-values {
-  grid-column: 1 / -1;
-  text-align: center;
-}
-
 .value {
-  position: relative;
-  height: 220px;
+  height: 100%;
 }
 
 .value:first-of-type {
@@ -233,9 +227,9 @@ h1 {
   padding-right: 16px;
 }
 .icon {
-  height: 150px;
-  width: 180px;
-  margin: 0 auto 24px;
+  height: 120px;
+  width: 190px;
+  margin: 0 auto;
 }
 
 .icon>img {
@@ -244,6 +238,28 @@ h1 {
 }
 
 .tag {
-  margin: 0;
+  margin: 16px 0 24px;
   text-align: center;
+}
+
+footer {
+  padding: 24px 48px;
+  background: #111;
+}
+
+#social-btns {
+  display: grid;
+  grid-template: 1fr / repeat(4,100px);
+  width: 400px;
+  margin: 0 auto;
+}
+
+.social-btn {
+  width: 100%;
+  text-align: center;
+}
+
+.social-btn img {
+  width: 36px;
+  height: 36px;
 }
