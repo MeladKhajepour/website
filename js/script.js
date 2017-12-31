@@ -5,12 +5,13 @@
     var name = document.getElementById("name");
     var list = document.getElementById("list");
     var listBtns = document.querySelectorAll('#list>ul a li');
-    var fader = document.getElementById("fader");
-    var opacity = 0;
+    var fader = document.querySelector("#landing .fader");
+    var tools = document.querySelector("#tools-banner .fader");
     var scrollable = false;
     var fixed = false;
     var scrollUp;
     var scrollPt;
+    var toolsPosn;
     var oldScroll;
     var handlers = {
       onResize: function(ev) {
@@ -30,29 +31,26 @@
       },
       onScroll: function() {
         scrollPt = window.pageYOffset;
+        toolsPosn = tools.getBoundingClientRect();
         scrollUp = oldScroll > scrollPt;
         oldScroll = scrollPt;
 
         //Adjusts the navbar behaviour
         if(scrollPt >= 300 && (!scrollable || !fixed)) {
-          console.log(">300");
           scrollable = true;
           name.classList.add("scrollable");
           list.classList.add("scrollable-transition");
 
           if(scrollPt >=384 && !fixed) {
-            console.log(">384");
             fixed = true;
             list.classList.remove("scrollable-transition");
             list.classList.add("fixed");
           }
         } else if(scrollPt < 384 && scrollPt >= 300 && fixed) {
-          console.log("384>x>300");
           fixed = false;
           list.classList.remove("fixed");
           list.classList.add("scrollable-transition");
         } else if(scrollPt < 300 && scrollable) {
-          console.log("<300");
           hasClass = false;
           name.classList.remove("scrollable");
           list.classList.remove("fixed", "scrollable-transition");
@@ -78,14 +76,17 @@
 
         //Fades the landing image as user scrolls down page
         if(scrollPt > fader.clientHeight / 3) {
-          opacity = ( scrollPt - fader.clientHeight / 3 ) / (fader.clientHeight / 2);
-          fader.style.opacity = opacity;
+          fader.style.opacity = ( scrollPt - fader.clientHeight / 3 ) / (fader.clientHeight / 2.5);
         } else {
           fader.style.opacity = 0;
         }
+
+        //Fades tool section after 50px over 250px
+        if(toolsPosn.top < window.innerHeight) {
+          tools.style.opacity = 1 - (window.innerHeight - toolsPosn.top - 50) / 250;
+        }
       }
     }
-    console.log(fader.clientHeight/4);
     window.onload = handlers.onLoad;
     window.onresize = handlers.onResize;
     window.onscroll = handlers.onScroll;
