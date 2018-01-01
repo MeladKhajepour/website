@@ -1,21 +1,24 @@
 (function() {
+  var winHeight = window.innerHeight;
+
   document.onreadystatechange = function () {
     if (document.readyState === "interactive") {
 
-    var name = document.getElementById("name");
-    var list = document.getElementById("list");
-    var listBtns = document.querySelectorAll('#list>ul a li');
-    var fader = document.querySelector("#landing .fader");
-    var tools = document.querySelector("#tools-banner .fader");
-    var scrollable = false;
-    var fixed = false;
-    var scrollUp;
-    var scrollPt;
-    var toolsPosn;
-    var oldScroll;
-    var handlers = {
+      var name = document.getElementById("name");
+      var list = document.getElementById("list");
+      var listBtns = document.querySelectorAll('#list>ul a li');
+      var landing = document.querySelector("#landing .fader");
+      var tools = document.querySelector("#tools .banner .fader");
+      var hobbies = document.querySelector("#hobbies .banner .fader");
+      var scrollable = false;
+      var fixed = false;
+      var scrollUp;
+      var scrollPt;
+      var toolsPosn;
+      var oldScroll;
+      var handlers = {
       onResize: function(ev) {
-
+        winHeight = window.innerHeight;
       },
       onLoad: function(ev) {
         listBtns.forEach(function(btn) {
@@ -29,9 +32,9 @@
           };
         });
       },
-      onScroll: function() {
+      onScroll: function(ev) {
         scrollPt = window.pageYOffset;
-        toolsPosn = tools.getBoundingClientRect();
+        //toolsPosn = tools.getBoundingClientRect();
         scrollUp = oldScroll > scrollPt;
         oldScroll = scrollPt;
 
@@ -74,23 +77,37 @@
           }
         });
 
-        //Fades the landing image as user scrolls down page
-        if(scrollPt > fader.clientHeight / 3) {
-          fader.style.opacity = ( scrollPt - fader.clientHeight / 3 ) / (fader.clientHeight / 2.5);
-        } else {
-          fader.style.opacity = 0;
-        }
-
-        //Fades tool section after 50px over 250px
-        if(toolsPosn.top < window.innerHeight) {
-          tools.style.opacity = 1 - (window.innerHeight - toolsPosn.top - 50) / 250;
-        }
+        fadeLanding(landing);
+        fade(tools);
+        fade(hobbies);
       }
     }
     window.onload = handlers.onLoad;
     window.onresize = handlers.onResize;
     window.onscroll = handlers.onScroll;
 
+    }
+  }
+
+  //Fades landing after 1/3 window height over 1/3 window height
+  var fadeLanding = function(landing) {
+    var posn = landing.getBoundingClientRect().bottom;
+
+    if(posn <= 2 * winHeight / 3 && posn > (winHeight / 3)) {
+      landing.style.opacity = (2 * winHeight / 3 - posn) / (winHeight / 3);
+    } else if (posn > 2 * winHeight / 3) {
+      landing.style.opacity = 0;
+    } else {
+      landing.style.opacity = 1;
+    }
+  }
+
+  //Fades el after 50px over 250px
+  var fade = function(el) {
+    var posn = el.getBoundingClientRect().top;
+
+    if(posn <= winHeight && posn > winHeight - 250) {
+      el.style.opacity = 1 - (winHeight - posn - 50) / 250;
     }
   }
 }())

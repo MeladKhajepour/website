@@ -1,6 +1,7 @@
 body {
   margin: 0;
   font-family: 'Montserrat', sans-serif;
+  font-weight: 200;
   background-color: #222;
   color: white;
 }
@@ -84,6 +85,8 @@ h1 {
   padding: 16px 0 10px;
   background-color: rgba(86, 43, 43, 0);
   position: fixed;
+  height: 84px;
+  box-sizing: border-box;
   width: 100%;
   z-index: 1;
   transition: background-color 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
@@ -254,25 +257,24 @@ h1 {
   position: relative;
 }
 
-#tools {
-
-}
-
-#tools-banner {
+.banner {
   height: 250px;
   position: relative;
-  background: url(../img/tools.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position-y: center;
   grid-column: 1 / -1;
 }
 
-#tools-banner div.occupy-div {
+#tools .banner {
+  background-image: url(../img/tools.jpg);
+}
+
+.banner div.occupy-div {
   background: radial-gradient(ellipse at center, rgba(0,0,0,.6) 0,rgba(0,0,0,.9) 110%)
 }
 
-#tools-banner div.occupy-div div {
+.banner div.occupy-div div {
   text-align: center;
   width: 960px;
   position: absolute;
@@ -281,15 +283,15 @@ h1 {
   transform: translate(-50%, -50%);
 }
 
-#tools-banner h1 {
+.banner h1 {
   font-size: 48px;
 }
 
-#tools-banner p {
+.banner p {
   font-size: 18px;
 }
 
-#tools-banner div.occupy-div.fader {
+.banner div.occupy-div.fader {
   background: #222;
 }
 
@@ -311,6 +313,14 @@ h1 {
   grid-column: 1 / -1;
   text-align: center;
   padding: 48px 0 64px;
+}
+
+#hobbies {
+
+}
+
+#hobbies .banner {
+  background-image: url("");
 }
 
 footer {
