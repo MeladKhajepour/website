@@ -1,21 +1,20 @@
 (function() {
   var winHeight = window.innerHeight;
+  var transition = false;
+  var fixed = false;
+  var scrollUp;
+  var scrollPt;
+  var oldScroll;
 
   document.onreadystatechange = function () {
     if (document.readyState === "interactive") {
 
-      var name = document.getElementById("name");
-      var list = document.getElementById("list");
+      var nav = document.getElementById("wrapper-nav");
       var listBtns = document.querySelectorAll('#list>ul a li');
+      var portrait = document.getElementById("portrait");
       var landing = document.querySelector("#landing .fader");
       var tools = document.querySelector("#tools .banner .fader");
       var hobbies = document.querySelector("#hobbies .banner .fader");
-      var scrollable = false;
-      var fixed = false;
-      var scrollUp;
-      var scrollPt;
-      var toolsPosn;
-      var oldScroll;
       var handlers = {
       onResize: function(ev) {
         winHeight = window.innerHeight;
@@ -34,48 +33,36 @@
       },
       onScroll: function(ev) {
         scrollPt = window.pageYOffset;
-        //toolsPosn = tools.getBoundingClientRect();
         scrollUp = oldScroll > scrollPt;
         oldScroll = scrollPt;
 
-        //Adjusts the navbar behaviour
-        if(scrollPt >= 300 && (!scrollable || !fixed)) {
-          scrollable = true;
-          name.classList.add("scrollable");
-          list.classList.add("scrollable-transition");
-
-          if(scrollPt >=384 && !fixed) {
-            fixed = true;
-            list.classList.remove("scrollable-transition");
-            list.classList.add("fixed");
-          }
-        } else if(scrollPt < 384 && scrollPt >= 300 && fixed) {
+        if(scrollPt < 650 && transition) {
+          transition = false;
+          nav.classList.remove("transition");
+        } else if(scrollPt >= 650 && scrollPt < 734 && !transition) {
           fixed = false;
-          list.classList.remove("fixed");
-          list.classList.add("scrollable-transition");
-        } else if(scrollPt < 300 && scrollable) {
-          hasClass = false;
-          name.classList.remove("scrollable");
-          list.classList.remove("fixed", "scrollable-transition");
+          transition = true;
+          nav.classList.remove("fixed");
+          nav.classList.add("transition");
+        } else if(scrollPt >= 734 && !fixed) {
+          transition = false;
+          fixed = true;
+          nav.classList.remove("transition");
+          nav.classList.add("fixed");
         }
 
-        //Adjusts the navbar opacity
-        if(scrollPt > 100) {
-          name.classList.add("filled");
-          list.classList.add("filled");
+        if(portrait.getBoundingClientRect().top < listBtns[0].getBoundingClientRect().bottom) {
+          nav.classList.add("filled");
         } else {
-          name.classList.remove("filled");
-          list.classList.remove("filled");
+          nav.classList.remove("filled");
         }
 
         //Expands and contracts nav buttons based on scroll direction
-        listBtns.forEach(function(btn) {
-          if(scrollUp) {
-            btn.classList.add("expanded");
-          } else if(!scrollUp) {
-            btn.classList.remove("expanded");
-          }
-        });
+        if(scrollUp) {
+          nav.classList.add("expanded");
+        } else {
+          nav.classList.remove("expanded");
+        }
 
         fadeLanding(landing);
         fade(tools);
@@ -108,6 +95,10 @@
 
     if(posn <= winHeight && posn > winHeight - 250) {
       el.style.opacity = 1 - (winHeight - posn - 50) / 250;
+    } else if(posn > winHeight) {
+      el.style.opacity = 1;
+    } else {
+      el.style.opacity = 0;
     }
   }
 }())

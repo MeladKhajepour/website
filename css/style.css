@@ -15,6 +15,10 @@ h1 {
   margin: 0;
 }
 
+.body {
+  background: #222;
+}
+
 .occupy-div{
   position: absolute;
   top: 0;
@@ -75,15 +79,14 @@ h1 {
 }
 
 #wrapper-nav {
-  height: 130px;
   position: absolute;
   width: 100%;
+  transition: background-color 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 #name {
   text-align: center;
   padding: 16px 0 10px;
-  background-color: rgba(86, 43, 43, 0);
   position: fixed;
   height: 84px;
   box-sizing: border-box;
@@ -92,44 +95,46 @@ h1 {
   transition: background-color 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-#name.scrollable {
+/*top value should be what is in script.js for displacement*/
+#wrapper-nav.transition #name {
   position: absolute;
-  top: 300px;
+  top: 650px;
 }
 
-#name.filled {
-  background-color: rgba(86, 43, 43, 1);
+#wrapper-nav.fixed #name {
+  position: absolute;
+  top: 650px;
+}
+
+#wrapper-nav.filled #name {
+  background-color: rgba(68, 68, 68, 1);
   transition: background-color 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-#name span {
+#name h1 {
   font-size: 48px;
-}
-
-#placeholder-name {
-  height: 84px;
+  font-weight: 200;
 }
 
 #list {
-  background-color: rgba(86, 43, 43, 0);
   position: fixed;
+  top: 84px;
   z-index: 1;
   width: 100%;
   transition: background-color 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-#list.scrollable-transition {
+#wrapper-nav.transition #list {
   position: absolute;
-  top: 384px;
+  top: 734px;
 }
 
-#list.fixed {
-  position: fixed;
+#wrapper-nav.fixed #list {
   top: 0;
 }
 
-#list.filled {
-  background-color: rgba(86, 43, 43, 1);
+#wrapper-nav.filled #list {
+  background-color: rgba(68, 68, 68, 1);
   transition: background-color 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
@@ -143,43 +148,29 @@ h1 {
 #list>ul li {
   display: inline-block;
   padding: 16px 20px 12px;
-  transition: background-color 0.225s cubic-bezier(0.4, 0.0, 0.2, 1),
-    padding 0.225s cubic-bezier(0.4, 0.0, 0.2, 1),
-    font-size 0.225s cubic-bezier(0.4, 0.0, 0.2, 1),
-    box-shadow 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-
-#list.filled>ul li:hover {
-  background-color: #471919;
-  transition: padding 0.225s cubic-bezier(0.4, 0.0, 0.2, 1),
-    font-size 0.225s cubic-bezier(0.4, 0.0, 0.2, 1),
-    background-color 0.225s cubic-bezier(0.4, 0.0, 0.2, 1),
-    box-shadow 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition: all 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 #list>ul li:hover {
-  background-color: rgba(42,42,43,0.8);
-  transition: padding 0.225s cubic-bezier(0.4, 0.0, 0.2, 1),
-    font-size 0.225s cubic-bezier(0.4, 0.0, 0.2, 1),
-    background-color 0.225s cubic-bezier(0.4, 0.0, 0.2, 1),
-    box-shadow 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
+  background-color: rgba(68,68,68,0.5);
+  transition: all 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 #list>ul li.selected {
-  box-shadow: inset 0 -10px 0 -7px #A77272;
-  transition: padding 0.225s cubic-bezier(0.4, 0.0, 0.2, 1),
-    font-size 0.225s cubic-bezier(0.4, 0.0, 0.2, 1),
-    background-color 0.225s cubic-bezier(0.4, 0.0, 0.2, 1),
-    box-shadow 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
+  box-shadow: inset 0 -10px 0 -7px #f85558;
+  transition: all 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-#list>ul li.expanded {
+.filled #list>ul li:hover {
+  background-color: #ccc;
+  color: black;
+  transition: all 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.expanded #list>ul li {
   padding: 32px 25px 24px;
   font-size: 18px;
-  transition: padding 0.225s cubic-bezier(0.4, 0.0, 0.2, 1),
-    font-size 0.225s cubic-bezier(0.4, 0.0, 0.2, 1),
-    background-color 0.225s cubic-bezier(0.4, 0.0, 0.2, 1),
-    box-shadow 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition: all 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 #landing {
@@ -187,12 +178,23 @@ h1 {
   height: 100vh;
   min-height: 648px;
   position: relative;
-  background-image: url("../img/landing.jpg");
   background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
   background-position: 50%;
+  overflow: hidden;
 }
+
+#landing::before {
+    content: ' ';
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: url("../img/landing.jpg") no-repeat center center;
+    background-size: cover;
+    will-change: transform;
+    z-index: -1;
+  }
 
 #gradient {
   background: linear-gradient(to right, rgba(34,34,34,1) 0%, rgba(34,34,34,0.95) 20%,
@@ -267,10 +269,10 @@ h1 {
 }
 
 #tools .banner {
-  background-image: url(../img/tools.jpg);
+  background-image: url("../img/tools.jpg");
 }
 
-.banner div.occupy-div {
+.banner div.occupy-div:first-of-type {
   background: radial-gradient(ellipse at center, rgba(0,0,0,.6) 0,rgba(0,0,0,.9) 110%)
 }
 
@@ -289,10 +291,6 @@ h1 {
 
 .banner p {
   font-size: 18px;
-}
-
-.banner div.occupy-div.fader {
-  background: #222;
 }
 
 #tools-grid {
@@ -315,58 +313,59 @@ h1 {
   padding: 48px 0 64px;
 }
 
-#hobbies {
-
+#hobbies .banner {
+  background-image: url("../img/hobbies.jpg");
 }
 
-#hobbies .banner {
-  background-image: url("");
+#hobbies .banner + div {
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(4, 1fr);
+  padding: 64px 24px 0;
 }
 
 footer {
-  padding: 24px 48px;
+  padding: 48px 48px 12px;
   background: #111;
 }
 
 #social-btns {
   display: grid;
-  grid-template: 42px / repeat(4,100px);
+  grid-template: 36px / repeat(4,100px);
   width: 400px;
   margin: 0 auto;
 }
 
 .social-btn {
   width: 60px;
-  height: 42px;
+  height: 36px;
   margin: auto;
-  text-align: center;
   position: relative;
-  background-size: 36px;
-  background-position-x: 50%;
-  background-position-y: 5px;
-  background-repeat: no-repeat;
-  transition: background-position 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-.social-btn:hover {
-  background-position-y: 0px;
-  transition: background-position 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
+.social-btn img {
+  height: 36px;
+  width: 42px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-.mail {
-  background-image: url(../img/icons/mail.svg);
+.social-btn img:last-child {
+  opacity: 0;
+  transition: all 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-.in {
-  background-image: url(../img/icons/in.svg);
+.social-btn:hover img {
+  height: 42px;
+  width: 48px;
+  transition: all 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-.ig {
-  background-image: url(../img/icons/ig.svg);
-}
-
-.github {
-  background-image: url(../img/icons/github.svg);
+.social-btn:hover img:last-child {
+  opacity: 1;
+  transition: all 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .social-btn>a {
@@ -376,7 +375,9 @@ footer {
 
 #copy {
   text-align: center;
-  padding-top: 36px;
+  width: 225px;
+  margin: 24px auto 0;
+  padding: 12px;
 }
 
 #copy p {
@@ -384,12 +385,35 @@ footer {
   margin: 0;
 }
 
-#copy p:hover i {
-  color: red;
-  transition: color 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
+#copy div {
+  height: 18px;
+  width: 20px;
+  position: relative;
+  display: inline-block;
+  margin: 0 8.5px 0 4px;
 }
 
-#copy p i {
-  color: inherit;
-  transition: color 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
+#copy img {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+
+#copy img:first-of-type {
+  opacity: 1;
+  z-index: 1;
+  transition: opacity 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+#copy:hover img {
+  opacity: 1;
+  transition: opacity 0.225s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+#copy:hover img:first-of-type {
+  opacity: 0;
+  transition: opacity 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
